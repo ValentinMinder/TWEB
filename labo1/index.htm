@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TWEB Lab 1</title>
+
+    <meta charset="utf-8">
+
+    <link rel="stylesheet" href="./js/bootstrap-3.2.0-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./js/bootstrap-3.2.0-dist/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="./css/sticky-footer.css">
+
+</head>
+<body>
+    <div class="container">
+
+        <div class="page-header">
+            <h1>Playing with JavaScript and Librairies</h1>
+        </div>
+
+        <div class="panel">
+            <ul>
+                <li>Lorem ipsum dolor sit amet</li>
+                <li>Lorem ipsum dolor sit amet</li>
+                <li>Lorem ipsum dolor sit amet</li>
+                <li>Lorem ipsum dolor sit amet</li>
+            </ul>
+        </div>
+
+        <div id="pers"><p>Hello {{prenom}} {{nom}} ({{sexe}}) !</p></div>
+
+        <p id="chambres" class="bg-info"></p>
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <p class="panel-title">Clock</p>
+            </div>
+            <div class="panel-body" id="clock"></div>
+            </div>
+            <button type="button" class="btn btn-primary" id="btn_alert" onclick="alert('Meh.')">Show Alert</button>
+            <button type="button" class="btn btn-default" id="btn_toggle" onclick="hide()">Toggle Students</button>
+        </div>
+
+        
+    </div>
+
+    <div class="footer">
+      <div class="container">
+        <p class="text-muted" id="coords"></p>
+      </div>
+    </div>
+
+    <script src="./js/jquery-2.1.1.js"></script>
+    <script src="./js/bootstrap-3.2.0-dist/js/bootstrap.min.js"></script>
+    <script src="./js/chance.js"></script>
+    <script src="./js/handlebars-v2.0.0.js"></script>
+
+    <script type="text/javascript">
+
+        function Personne(n, p, s){
+            this.nom = n;
+            this.prenom = p,
+            this.sexe = s;
+        }
+
+        var source   = $("#pers").html();
+        var template = Handlebars.compile(source);
+        var content = document.getElementById("pers");
+
+        var rooms = jQuery.parseJSON(
+            jQuery.ajax({
+                url: "./rooms.json", 
+                async: false,
+                dataType: 'json'
+            }).responseText
+        ).rooms;
+
+        $(rooms).each(function(index, value){
+            $('#chambres').append("<p>Room: " + value.name + ", " + value.uselessNumber + "</p>");
+        });
+
+        $('#btn_toggle').click(function(){
+            $('#pers').toggle();
+        });
+
+        setInterval(function() {
+            var date = new Date();
+            $('#clock').html(date.toUTCString());
+        }, 500);
+
+        $(document).mousemove(function(e){
+            $('#coords').html(e.clientX + ", " + e.clientY);
+
+            var sexe = chance.gender();
+            var personne = new Personne(chance.first({gender: sexe}), chance.last({gender: sexe}), sexe);
+            
+            if(personne.sexe == "Female") content.className = "bg-danger";
+            else if(personne.sexe == "Male") content.className = "bg-info";
+
+            if(e.shiftKey) {
+                $("#pers").append(template(personne));
+            }
+            else {
+                $("#pers").html(template(personne));
+            }
+        });
+    </script>
+</body>

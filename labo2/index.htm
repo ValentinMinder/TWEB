@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TWEB Lab 2</title>
+
+    <meta charset="utf-8">
+
+    <link rel="stylesheet" href="./js/bootstrap-3.2.0-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./js/bootstrap-3.2.0-dist/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="./js/vis.css">
+    <link rel="stylesheet" href="./css/sticky-footer.css">
+
+</head>
+<body>
+    <div class="container">
+        <pre>
+          function Person() {}
+
+          function Toy() {}
+
+          function Cat() {
+            this.legs = 4;
+          }
+
+          var hans = new Person();
+          hans.firstName = 'Hans';
+          hans.lastName = 'Würst';
+          hans.zip = 1400;
+
+          var albert = Object.create(hans);
+          albert.firstName = 'Albert';
+          albert.zip = 1423;
+
+          var bob = Object.create(albert);
+          bob.firstName = 'Bob';
+          bob.toy = new Toy();
+          bob.toy.description = 'Playstation 4';
+
+          var denis = Object.create(hans);
+          denis.firstName = 'Denis';
+          denis.fall = function() {
+            console.log("I'm falling")
+          }
+
+          var adolf = new Cat();
+          adolf.name = 'Adolf le bref';
+
+          var visualGraph1 = new jsvis.VisualizationGraph();
+          visualGraph1.addJsObjectToGraph(adolf);
+
+          var visualGraph2 = new jsvis.VisualizationGraph();
+          visualGraph2.addJsObjectToGraph(hans);
+
+          var visualGraph3 = new jsvis.VisualizationGraph();
+          visualGraph3.addJsObjectToGraph(bob);
+          visualGraph3.addJsObjectToGraph(bob.toy);
+          visualGraph3.addJsObjectToGraph(denis);
+          visualGraph3.addJsObjectToGraph(adolf);
+        </pre>
+        <div class="panel" id="graph1"></div>
+        <div class="panel" id="graph2"></div>
+        <div class="panel" id="graph3"></div>
+    </div>
+
+    <div class="footer">
+      <div class="container">
+        <p class="text-muted" id="coords"></p>
+      </div>
+    </div>
+
+    <script src="./js/jquery-2.1.1.js"></script>
+    <script src="./js/bootstrap-3.2.0-dist/js/bootstrap.min.js"></script>
+
+    <script src="./js/myModule.js"></script>
+    <script src="./js/vis.js"></script>
+    <script src="./js/myPageScript.js"></script>
+
+    <script type="text/javascript">
+      function Person() {}
+
+      function Toy() {}
+
+      function Cat() {
+        this.legs = 4;
+      }
+
+      var hans = new Person();
+      hans.firstName = 'Hans';
+      hans.lastName = 'Würst';
+      hans.zip = 1400;
+
+      var albert = Object.create(hans);
+      albert.firstName = 'Albert';
+      albert.zip = 1423;
+
+      var bob = Object.create(albert);
+      bob.firstName = 'Bob';
+      bob.toy = new Toy();
+      bob.toy.description = 'Playstation 4';
+
+      var denis = Object.create(hans);
+      denis.firstName = 'Denis';
+      denis.fall = function() {
+        console.log("I'm falling")
+      }
+
+      var adolf = new Cat();
+      adolf.name = 'Adolf le bref';
+
+      var visualGraph1 = new jsvis.VisualizationGraph();
+      visualGraph1.addJsObjectToGraph(adolf);
+
+      var visualGraph2 = new jsvis.VisualizationGraph();
+      visualGraph2.addJsObjectToGraph(hans);
+
+      var visualGraph3 = new jsvis.VisualizationGraph();
+      visualGraph3.addJsObjectToGraph(bob);
+      visualGraph3.addJsObjectToGraph(bob.toy);
+      visualGraph3.addJsObjectToGraph(denis);
+      visualGraph3.addJsObjectToGraph(adolf);
+
+      visualGraph1.draw(document.getElementById('graph1'));
+      visualGraph2.draw(document.getElementById('graph2'));
+      visualGraph3.draw(document.getElementById('graph3'), true);
+    </script>
+
+</body>
